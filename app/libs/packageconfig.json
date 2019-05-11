@@ -1,0 +1,10 @@
+{
+  "sakuemas": {
+    "packageName": "com.sakuemasc.tongji",
+    "FacebookContentProvider": "com.facebook.app.FacebookContentProvider1970423999646560",
+    "facebookScheme": "fb1970423999646560",
+    "appName": "\"Saku Emas\"",
+    "appNameMainfest": "Saku Emas",
+    "agent": "0"
+  }
+}

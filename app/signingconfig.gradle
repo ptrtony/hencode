@@ -1,0 +1,10 @@
+android {
+    signingConfigs {
+        sakuemas {
+            keyAlias "sakuemas"
+            keyPassword KEY_PASSWORD
+            storeFile file('jks/sakuemas.jks')
+            storePassword KEYSTORE_PASSWORD
+        }
+    }
+}

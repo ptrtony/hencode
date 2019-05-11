@@ -1,0 +1,75 @@
+//apply from: 'signingconfig.gradle'
+android{
+    compileSdkVersion 28
+    def currentVersionCode = getVersionCode()
+    def currentVersionName = getVersionName()
+    def packageConfig = getPackageConfig()
+
+    buildTypes {
+        def zf_build_time = "${releaseTime()}"
+        releaseToIndo {
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField "boolean", "zf_DEBUG", "false" // 打印log日志
+            buildConfigField "int", "Build_Type", "3" // 印尼正式
+            buildConfigField "int", "code_force", "1" // 印尼不弹验证码
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField "boolean", "zf_DEBUG", "true" // 打印log日志
+            buildConfigField "int", "Build_Type", "1" // debug
+            buildConfigField "int", "code_force", "0" // 宁波弹验证码
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField "boolean", "zf_DEBUG", "false" // 打印log日志
+            buildConfigField "int", "Build_Type", "1" // 宁波正式
+            buildConfigField "int", "code_force", "0" // 宁波弹验证码
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        releaseToTest {
+            minifyEnabled true
+            shrinkResources true
+            buildConfigField "boolean", "zf_DEBUG", "false" // 打印log日志
+            buildConfigField "int", "Build_Type", "1" // 宁波正式
+            buildConfigField "int", "code_force", "0" // 宁波弹验证码
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "app"
+
+    productFlavors {
+        sakuemas {
+            applicationId packageConfig.sakuemas.packageName
+            versionCode currentVersionCode
+            versionName '2.1' +currentVersionName
+            dimension "app"
+            buildConfigField 'String', 'APP_NAME', '"sakuemas"'
+            buildConfigField 'String', 'APP_NAME_XML', packageConfig.sakuemas.appName
+            buildConfigField 'String', 'OSS_ENDPOINT', '"oss-ap-southeast-1.aliyuncs.com"'
+            buildConfigField 'String', 'TEST_APIS_URL', '"http://sakuemas.odanapi.uangmerah.com/v6/appservice/"'
+            buildConfigField 'String', 'ONLINE_APIS_URL', '"https://sakuemas-api.iposecure.com/v6/appservice/"'
+            buildConfigField 'String', 'CHANNEL_ID', '"beb7e29c9215dcbcd52bd1267eb540f9"'
+            buildConfigField 'int', 'AGENT', packageConfig.sakuemas.agent
+            signingConfig signingConfigs.sakuemas
+            //个推 config
+            manifestPlaceholders = [provider_name           : packageConfig.sakuemas.packageName,
+                                    FacebookContentProvider : packageConfig.sakuemas.FacebookContentProvider,
+                                    facebookScheme          : packageConfig.sakuemas.facebookScheme,
+                                    APP_NAME_MANIFEST       : packageConfig.sakuemas.appNameMainfest,
+                                    rupiazoneKey            : "Rupiazone_Public_39066049f099491198ca9bd4becc4ca5",
+                                    rupiazoneSecert         : "Rupiazone_Production_0342b876c7510554b69d6740ba288990",
+                                    GETUI_APP_ID            : "0rOdFZeGlH9WuAZbbSrJo7",
+                                    GETUI_APP_KEY           : "c9v7xatJlQAvvdqJQpoml5",
+                                    GETUI_APP_SECRET        : "iDL4THjhsN9cYqbqjxseL2"]
+        }
+    }
+
+}
